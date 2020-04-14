@@ -95,6 +95,8 @@ class ServerId {
     {
     }
 
+    ServerId(ServerId const&) = default;
+
     /**
      * Obtain the ServerId's uint64_t serialised form.
      */

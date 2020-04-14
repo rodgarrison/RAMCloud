@@ -15,7 +15,6 @@
 
 """Misc utilities and variables for Python scripts."""
 
-import commands
 import contextlib
 import os
 import random
@@ -46,10 +45,7 @@ def captureSh(command, **kwargs):
     output = p.communicate()[0]
     if p.returncode:
         raise subprocess.CalledProcessError(p.returncode, command)
-    if output.count('\n') and output[-1] == '\n':
-        return output[:-1]
-    else:
-        return output
+    return output.strip()
 
 class Sandbox(object):
     """A context manager for launching and cleaning up remote processes."""
@@ -306,7 +302,7 @@ def getHosts():
                       i))
     """
     # Find servers locked by user via rcres
-    rcresOutput = commands.getoutput('rcres ls -l | grep "$(whoami)" | cut -c13-16 | grep "rc[0-9]" | cut -c3-4')
+    rcresOutput = captureSh.getoutput('rcres ls -l | grep "$(whoami)" | cut -c13-16 | grep "rc[0-9]" | cut -c3-4')
     rcresFailed = re.match(".*not found.*", rcresOutput)
 
     # If hosts overridden in localconfig.py, check that all servers are locked
@@ -362,7 +358,7 @@ def checkHost(host):
             return True
 
     # Server was not found in the valid list, let's check what the problem may be
-    rcresOutput = commands.getoutput('rcres ls')
+    rcresOutput = captureSh.getoutput('rcres ls')
     rcresFailed = re.match(".*not found.*", rcresOutput)
     if rcresFailed:
         raise Exception ("Attempted to use a host (%s) that is not present in the "

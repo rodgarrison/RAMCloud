@@ -112,11 +112,11 @@ if __name__ == '__main__':
     definitions = PragmaDefinitions()
     globals_ = {'PragmaDefinition': PragmaDefinition,
                 'definitions': definitions}
-    execfile(options.defs_file, globals_)
+    exec(open(options.defs_file).read(), globals_)
     magic_pattern = globals_['magic_pattern']
 
     if options.list_settings:
-        print definitions
+        print(definitions)
         sys.exit(0)
 
 
@@ -131,20 +131,20 @@ if __name__ == '__main__':
             p, v = options.filt.split(':')
             try:
                 if pragmas[p] == int(v):
-                    print filename
+                    print(filename)
             except KeyError:
                 if definitions[p].default == int(v):
-                    print filename
+                    print(filename)
         else:
             if options.query is not None:
                 try:
-                    print pragmas[options.query]
+                    print(pragmas[options.query])
                 except KeyError:
-                    print definitions[options.query].default
+                    print(definitions[options.query].default)
             else:
                 for k, definition in definitions.items():
                     try:
                         v = pragmas[k]
                     except KeyError:
                         v = definition.default
-                    print '%s=%d' % (k, v)
+                    print('%s=%d' % (k, v))

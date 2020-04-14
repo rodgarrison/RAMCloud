@@ -1,2 +1,3 @@
-#!/bin/bash
-exec make -j8 --silent > /dev/null
+#!/bin/sh
+set -e
+scons

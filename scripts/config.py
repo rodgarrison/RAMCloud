@@ -30,17 +30,26 @@ __all__ = ['coordinator_port', 'default_disks', 'git_branch',
            'local_scripts_path', 'second_backup_port', 'server_port',
            'top_path']
 
+def captureSh(command, **kwargs):
+    """Execute a local command and capture its output."""
+
+    kwargs['shell'] = True
+    kwargs['stdout'] = subprocess.PIPE
+    p = subprocess.Popen(command, **kwargs)
+    output = p.communicate()[0]
+    if p.returncode:
+        raise subprocess.CalledProcessError(p.returncode, command)
+    return output.strip()
+
 # git_branch is the name of the current git branch, which is used
 # for purposes such as computing objDir.
 try:
-    git_branch = re.search('^refs/heads/(.*)$',
-                           captureSh('git symbolic-ref -q HEAD 2>/dev/null'))
+    # git_branch = re.search('^refs/heads/(.*)$', captureSh('git symbolic-ref -q HEAD 2>/dev/null'))
+    git_branch = "master"
 except subprocess.CalledProcessError:
     git_branch = None
     obj_dir = 'obj'
-else:
-    git_branch = git_branch.group(1)
-    obj_dir = 'obj.%s' % git_branch
+obj_dir = 'obj.%s' % git_branch
 
 # git_ref is the id of the commit at the HEAD of the current branch.
 try:

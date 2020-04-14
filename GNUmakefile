@@ -111,12 +111,12 @@ COMWARNS := -Wall -Wformat=2 -Wextra \
             -Wwrite-strings -Wno-unused-parameter -Wmissing-format-attribute
 CWARNS   := $(COMWARNS) -Wmissing-prototypes -Wmissing-declarations -Wshadow \
 		-Wbad-function-cast
-CXXWARNS := $(COMWARNS) -Wno-non-template-friend -Woverloaded-virtual \
+CXXWARNS := $(COMWARNS) -Wno-unsupported-friend -Woverloaded-virtual \
 		-Wcast-qual \
 		-Wcast-align -Wconversion
-ifeq ($(COMPILER),gnu)
-CXXWARNS += -Weffc++
-endif
+# ifeq ($(COMPILER),gnu)
+# CXXWARNS += -Weffc++
+# endif
 # Too many false positives list:
 # -Wunreachable-code
 # Failed deconstructor inlines are generating noise
@@ -138,20 +138,21 @@ INCLUDES := -I$(TOP)/src \
             -I$(TOP)/$(OBJDIR) \
             -I$(GTEST_DIR)/include \
             -I/usr/local/openonload-201405/src/include \
+            -I/usr/local/include \
              $(NULL)
 ifeq ($(LOGCABIN),yes)
 INCLUDES := $(INCLUDES) -I$(LOGCABIN_DIR)/include
 endif
 
-CC ?= gcc
-CXX ?= g++
-AR ?= gcc-ar
+CC=gcc
+CXX=g++
+AR=gcc-ar
 PERL ?= perl
 PYTHON ?= python
 LINT := $(PYTHON) cpplint.py --filter=-runtime/threadsafe_fn,-readability/streams,-whitespace/blank_line,-whitespace/braces,-whitespace/comments,-runtime/arrays,-build/include_what_you_use,-whitespace/semicolon
 PRAGMAS := ./pragmas.py
 NULL := # useful for terminating lists of files
-PROTOC ?= protoc
+PROTOC ?= /usr/local/bin/protoc
 EPYDOC ?= epydoc
 EPYDOCFLAGS ?= --simple-term -v
 DOXYGEN ?= doxygen

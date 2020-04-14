@@ -47,7 +47,7 @@ class MockTransport : public Transport {
     getSession();
 
     void registerMemory(void* base, size_t bytes) {
-        RAMCLOUD_TEST_LOG("register %d bytes at %lu for %s",
+        RAMCLOUD_TEST_LOG("register %d bytes at %llu for %s",
                           static_cast<int>(bytes),
                           reinterpret_cast<uint64_t>(base),
                           locatorString.c_str());
