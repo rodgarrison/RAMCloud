@@ -139,6 +139,7 @@ INCLUDES := -I$(TOP)/src \
             -I$(GTEST_DIR)/include \
             -I/usr/local/openonload-201405/src/include \
             -I/usr/local/include \
+	    -I/usr/include \
              $(NULL)
 ifeq ($(LOGCABIN),yes)
 INCLUDES := $(INCLUDES) -I$(LOGCABIN_DIR)/include
