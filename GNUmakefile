@@ -107,13 +107,10 @@ endif
 
 TEST_INSTALL_FLAGS =
 
-COMWARNS := -Wall -Wformat=2 -Wextra \
-            -Wwrite-strings -Wno-unused-parameter -Wmissing-format-attribute
-CWARNS   := $(COMWARNS) -Wmissing-prototypes -Wmissing-declarations -Wshadow \
-		-Wbad-function-cast
-CXXWARNS := $(COMWARNS) -Wno-unsupported-friend -Woverloaded-virtual \
-		-Wcast-qual \
-		-Wcast-align -Wconversion
+COMWARNS := -Wall -Wformat=2 -Wextra -Wwrite-strings
+CWARNS   := $(COMWARNS) -Wmissing-prototypes -Wmissing-declarations -Wshadow -Wbad-function-cast
+CXXWARNS := $(COMWARNS) -Wno-unsupported-friend -Woverloaded-virtual -Wcast-qual \
+		-Wcast-align -Wno-unused-parameter -Wmissing-format-attribute -Wno-format -Wno-conversion
 # ifeq ($(COMPILER),gnu)
 # CXXWARNS += -Weffc++
 # endif
